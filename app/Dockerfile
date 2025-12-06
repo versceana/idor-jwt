@@ -10,3 +10,5 @@ RUN pip3 install --upgrade pip && \
 COPY . .
 
 EXPOSE 5000
+
+CMD ["python", "main.py"]
