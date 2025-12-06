@@ -1,0 +1,51 @@
+services:
+  web:
+    build: .
+    container_name: flask_app
+    command: python main.py
+    ports:
+      - "5001:5000"
+    environment:
+      FLASK_ENV: development
+      LOG_LEVEL: INFO
+      PYTHONUNBUFFERED: true    
+
+      # DB config (Flask app should read these)
+      DB_HOST: db
+      DB_PORT: 5433
+      DB_NAME: mydb
+      DB_USER: myuser
+      DB_PASSWORD: mypassword
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+
+  db:
+    image: postgres:16-alpine
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  pgdata:
+
+networks:
+  backend:
+    driver: bridge
