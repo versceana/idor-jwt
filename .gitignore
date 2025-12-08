@@ -1,0 +1,52 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual env
+.venv/
+env/
+venv/
+
+# Byte-compiled / optimized / DLL files
+*.egg
+*.egg-info/
+.eggs/
+
+# Unit test / coverage reports
+.coverage
+.cache/
+.pytest_cache/
+
+# Logs
+*.log
+
+# --- Flask / app cache ---
+instance/
+*.sqlite
+*.db
+
+# --- IDE / Editors ---
+# PyCharm
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+
+# --- Docker ---
+# Ignore Python cache inside containers
+*/__pycache__/
+
+# Ignore stray Compose files
+docker-compose.override.yml
+
+app/app/__pycache__/
+
+# macOS
+.DS_Store
+
+# Jupyter (если вдруг появится)
+.ipynb_checkpoints/
