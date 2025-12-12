@@ -1,0 +1,8 @@
+[bandit]
+# Bandit configuration for security scanning
+exclude_dirs = ["tests", "test", "__pycache__", ".venv", "venv", "env"]
+skips = ["B101"]  # Skip assert_used test (common in test files)
+
+[bandit.assert_used]
+skips = ["*/test_*.py", "*/tests/*"]
+
