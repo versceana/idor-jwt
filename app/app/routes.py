@@ -9,8 +9,35 @@ bp = Blueprint("api", __name__)
 
 @bp.route("/health", methods=["GET"])
 def health():
-    return jsonify({"status": "ok", "mode": current_app.config["MODE"]})
+    """
+    Lightweight health-check endpoint.
 
+    - Always returns JSON.
+    - Checks basic application configuration.
+    - Tries a very small DB query to verify connectivity.
+      If DB check fails, status becomes "degraded" and HTTP 503 is returned.
+    """
+    status = "ok"
+    db_status = "ok"
+
+    try:
+        db = get_db()
+        # Very cheap query: just check we can talk to the database
+        db.execute(select(1))
+    except Exception as exc:
+        status = "degraded"
+        db_status = "error"
+        current_app.logger.exception("Health-check DB probe failed: %%s", exc)
+
+    payload = {
+        "status": status,
+        "mode": current_app.config.get("MODE", "unknown"),
+        "db": db_status,
+    }
+
+    http_status = 200 if status == "ok" else 503
+    current_app.logger.info("Health-check result: %%s", payload)
+    return jsonify(payload), http_status
 @bp.route("/login", methods=["POST"])
 def login():
     """
