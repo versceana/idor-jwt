@@ -14,6 +14,7 @@ services:
 
       # DB config (Flask app should read these)
       DATABASE_URL: postgresql://myuser:mypassword@db:5432/mydb
+      MODE: FIXED
     depends_on:
       db:
         condition: service_healthy
