@@ -16,22 +16,30 @@ from app.models import Base, User, Document
 
 def get_database_url():
     """Construct database URL from environment variables or use default."""
+    # Check if DATABASE_URL is set directly
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        return database_url
+    
+    # Build from individual components
     db_host = os.getenv("DB_HOST", "localhost")
     db_port = os.getenv("DB_PORT", "5432")
     db_name = os.getenv("DB_NAME", "mydb")
     db_user = os.getenv("DB_USER", "myuser")
     db_password = os.getenv("DB_PASSWORD", "mypassword")
     
-    # Check if DATABASE_URL is set directly
-    if os.getenv("DATABASE_URL"):
-        return os.getenv("DATABASE_URL")
-    
     return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 
 def seed_database():
     """Create tables and populate with test data."""
     database_url = get_database_url()
-    print(f"Connecting to database: {database_url.split('@')[1] if '@' in database_url else '***'}")
+    if not database_url:
+        print("✗ Error: Database URL is not set", file=sys.stderr)
+        sys.exit(1)
+    
+    # Safely extract database info for display (hide password)
+    db_display = database_url.split('@')[1] if database_url and '@' in database_url else '***'
+    print(f"Connecting to database: {db_display}")
     
     engine = create_engine(database_url)
     
