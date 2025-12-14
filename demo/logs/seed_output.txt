@@ -1,0 +1,13 @@
+Connecting to database: db:5432/mydb
+Creating tables...
+Clearing existing data...
+Creating test users...
+Creating documents...
+✓ Database seeded successfully!
+
+Test users created:
+  - alice (id=1, role=user) - 2 documents
+  - bob (id=2, role=user) - 3 documents
+  - charlie (id=3, role=user) - 1 documents
+  - admin (id=4, role=admin) - 0 documents
+  - victim (id=5, role=user) - 2 documents

@@ -1,0 +1,5 @@
+{
+  "db": "ok",
+  "mode": "VULN",
+  "status": "ok"
+}

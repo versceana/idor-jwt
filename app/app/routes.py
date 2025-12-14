@@ -7,6 +7,14 @@ from sqlalchemy import select
 
 bp = Blueprint("api", __name__)
 
+@bp.route("/", methods=["GET"])
+def index():
+    return jsonify({
+        "project": "IDOR + Weak JWT demo",
+        "mode": current_app.config.get("MODE", "unknown"),
+        "endpoints": ["/health", "/login", "/users/<id>/docs"]
+    })
+
 @bp.route("/health", methods=["GET"])
 def health():
     """
